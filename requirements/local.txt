@@ -1,0 +1,4 @@
+-r base.txt
+pre-commit==3.3.3
+Faker>=17.0.0
+coverage==7.2.7
