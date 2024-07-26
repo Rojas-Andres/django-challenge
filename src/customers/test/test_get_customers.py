@@ -7,6 +7,7 @@ from rest_framework.test import APIClient, APITestCase
 from customers.models import Customer
 from datetime import datetime
 
+
 class TestGetCustomers(APITestCase):
     @classmethod
     def setUpClass(cls) -> None:
@@ -95,7 +96,6 @@ class TestGetCustomers(APITestCase):
         assert len(response_filter_1.json()["results"]) == 1
         assert response_filter_1.json()["results"][0]["external_id"] == "3"
 
-
     def test_filter_page(self):
         """
         Test case to verify filtering customers by external_id.
@@ -115,13 +115,12 @@ class TestGetCustomers(APITestCase):
                 preapproved_at=timezone.now(),
             )
         query_params = {
-            "page_size":1,
+            "page_size": 1,
         }
         response_filter_1 = self.client.get(self.url, query_params)
         assert response_filter_1.status_code == 200
         assert len(response_filter_1.json()["results"]) == 1
         assert response_filter_1.json()["total_pages"] == 10
-
 
     def test_filter_preapproved(self):
         """
@@ -154,18 +153,17 @@ class TestGetCustomers(APITestCase):
             preapproved_at=datetime.strptime("2023-01-01 00:00:00", "%Y-%m-%d %H:%M:%S"),
         )
         query_params = {
-            "preapproved_at":"2023-02-01",
+            "preapproved_at": "2023-02-01",
         }
         response_filter_1 = self.client.get(self.url, query_params)
         assert response_filter_1.status_code == 200
         assert len(response_filter_1.json()["results"]) == 2
         query_params = {
-            "preapproved_at":"2023-02-04",
+            "preapproved_at": "2023-02-04",
         }
         response_filter_2 = self.client.get(self.url, query_params)
         assert response_filter_2.status_code == 200
         assert len(response_filter_2.json()["results"]) == 1
-
 
     def test_invalid_filter_at(self):
         """
@@ -177,7 +175,7 @@ class TestGetCustomers(APITestCase):
 
         """
         query_params = {
-            "preapproved_at":"2023-02-01 4",
+            "preapproved_at": "2023-02-01 4",
         }
         response_filter_1 = self.client.get(self.url, query_params)
         assert response_filter_1.status_code == 422

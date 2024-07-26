@@ -11,6 +11,7 @@ from django_filters.rest_framework import DjangoFilterBackend
 from customers.models import Customer
 from customers.filters import CustomerFilters
 from rest_framework.generics import GenericAPIView
+from rest_framework.permissions import IsAuthenticated
 
 
 class CustomerView(GenericAPIView):
@@ -21,7 +22,7 @@ class CustomerView(GenericAPIView):
     pagination_class = StandardResultsSetPagination
     page_size_query_param = "page_size"
     ordering_fields = ["created_at", "updated_at"]
-
+    permission_classes = [IsAuthenticated]
     filterset_class = CustomerFilters
 
     def get_queryset(self):

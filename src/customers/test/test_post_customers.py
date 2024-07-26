@@ -7,6 +7,7 @@ from rest_framework.test import APIClient, APITestCase
 from customers.models import Customer
 from datetime import datetime
 
+
 class TestCreateCustomers(APITestCase):
     @classmethod
     def setUpClass(cls) -> None:

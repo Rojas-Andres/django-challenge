@@ -1,6 +1,7 @@
 from customers.strategy import JsonProcessing, TxtProcessing, ProcessingStrategy
 from rest_framework.exceptions import ValidationError
 
+
 class ProcessingFactory:
     strategy_map_processing = {"json": JsonProcessing(), "txt": TxtProcessing()}
 

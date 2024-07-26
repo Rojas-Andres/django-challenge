@@ -6,10 +6,13 @@ from customers.models import Customer
 from utils.messages import MESSAGE_LOAN_CREATE
 from loans.services import LoanService
 from rest_framework.exceptions import ValidationError
+from rest_framework.permissions import IsAuthenticated
 
 
 class LoanView(APIView):
     """View for retrieving the created appointment."""
+
+    permission_classes = [IsAuthenticated]
 
     def post(self, request):
         """Handle POST request."""
@@ -45,6 +48,8 @@ class LoanStatusLoan(APIView):
     Methods:
         put: Activate a loan.
     """
+
+    permission_classes = [IsAuthenticated]
 
     def put(self, request):
         """
