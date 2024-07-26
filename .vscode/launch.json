@@ -70,5 +70,19 @@
       "django": true,
       "justMyCode": true
     },
+    {
+      "name": "TEST LOCAL Auth",
+      "type": "python",
+      "request": "launch",
+      "program": "${workspaceFolder}/src/manage.py",
+      "envFile": "${workspaceFolder}/.env",
+      "args": [
+          "test",
+          "authentication",
+          "--noinput"
+      ],
+      "django": true,
+      "justMyCode": true
+    },
   ]
 }

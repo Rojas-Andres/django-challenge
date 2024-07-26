@@ -6,7 +6,7 @@ from rest_framework_simplejwt.views import TokenRefreshView, TokenVerifyView
 
 from authentication.views import LoginView, LogoutAllView, LogoutView
 
-APP_NAME = "user"
+app_name = "authentication"
 
 urlpatterns = [
     path("logout/", LogoutView.as_view(), name="logout"),

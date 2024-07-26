@@ -45,7 +45,12 @@ class UserSerializer(serializers.ModelSerializer):
 
         if validated_data.get("email"):
             validated_data["email"] = validated_data["email"].lower()
-        return User.objects.create_user(**validated_data)
+        if "groups" in validated_data and len(validated_data.get("groups", None)) == 0:
+            validated_data.pop("groups")
+        if "user_permissions" in validated_data and len(validated_data.get("user_permissions", None)) == 0:
+            validated_data.pop("user_permissions")
+        user = User.objects.create_user(**validated_data)
+        return user
 
     def update(self, instance, validated_data):
         """
