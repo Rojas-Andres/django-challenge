@@ -1,11 +1,13 @@
+from datetime import datetime
+
 import django
 from django.core.management import call_command
 from django.db.models.query import QuerySet
 from django.urls import reverse
 from django.utils import timezone
 from rest_framework.test import APIClient, APITestCase
+
 from customers.models import Customer
-from datetime import datetime
 
 
 class TestCreateCustomers(APITestCase):

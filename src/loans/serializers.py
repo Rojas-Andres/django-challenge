@@ -1,5 +1,6 @@
 from rest_framework import serializers
-from loans.models import Loan, STATUS_LOAN
+
+from loans.models import STATUS_LOAN, Loan
 from utils.messages import MESSAGE_AMOUNT_NOT_NEGATIVE, MESSAGE_STATUS_PERMISSION_LOAN
 
 
@@ -59,5 +60,5 @@ class LoanUpdateSerializer(serializers.Serializer):
         """
         Check that the status is valid.
         """
-        if value not in dict(STATUS_LOAN).keys():
-            raise serializers.ValidationError(MESSAGE_STATUS_PERMISSION_LOAN.format(status=dict(STATUS_LOAN).keys()))
+        if value not in dict(STATUS_LOAN).keys():  # pylint: disable=C0201
+            raise serializers.ValidationError(MESSAGE_STATUS_PERMISSION_LOAN.format(status=dict(STATUS_LOAN).keys()))  # pylint: disable=C0201

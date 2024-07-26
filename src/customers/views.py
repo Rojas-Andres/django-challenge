@@ -1,17 +1,17 @@
 from django.shortcuts import render
-from rest_framework.views import APIView
-from customers.factory import ProcessingFactory
-from rest_framework.response import Response
-from rest_framework.exceptions import ValidationError
-
-from customers.serializers import CustomerSerializer
-from utils.pagination import StandardResultsSetPagination
-from rest_framework.filters import OrderingFilter, SearchFilter
 from django_filters.rest_framework import DjangoFilterBackend
-from customers.models import Customer
-from customers.filters import CustomerFilters
+from rest_framework.exceptions import ValidationError
+from rest_framework.filters import OrderingFilter, SearchFilter
 from rest_framework.generics import GenericAPIView
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
+from rest_framework.views import APIView
+
+from customers.factory import ProcessingFactory
+from customers.filters import CustomerFilters
+from customers.models import Customer
+from customers.serializers import CustomerSerializer
+from utils.pagination import StandardResultsSetPagination
 
 
 class CustomerView(GenericAPIView):

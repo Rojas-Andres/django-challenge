@@ -1,12 +1,13 @@
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from loans.serializers import LoanSerializer, LoanUpdateSerializer
 from django.db.models import Sum
-from customers.models import Customer
-from utils.messages import MESSAGE_LOAN_CREATE
-from loans.services import LoanService
 from rest_framework.exceptions import ValidationError
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
+from rest_framework.views import APIView
+
+from customers.models import Customer
+from loans.serializers import LoanSerializer, LoanUpdateSerializer
+from loans.services import LoanService
+from utils.messages import MESSAGE_LOAN_CREATE
 
 
 class LoanView(APIView):

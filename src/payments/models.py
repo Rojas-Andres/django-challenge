@@ -1,5 +1,6 @@
-from core.models import BaseModel
 from django.db import models
+
+from core.models import BaseModel
 from customers.models import Customer
 from loans.models import Loan
 

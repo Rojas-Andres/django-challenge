@@ -2,7 +2,7 @@
 
 from django.urls import path
 
-from loans.views import LoanView, LoanStatusLoan
+from loans.views import LoanStatusLoan, LoanView
 
 app_name = "loans"  # pylint: disable=C0103
 

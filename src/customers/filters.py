@@ -1,13 +1,21 @@
-from django_filters import rest_framework as filters
-from customers.models import Customer
 from datetime import datetime
+
 import pytz  # type: ignore
+from django_filters import rest_framework as filters
+
+from customers.models import Customer
 from utils.filters import BaseFilterStatus
 
 
 class BaseDateFilterSet(filters.FilterSet):
     """
-    Base FilterSet for filtering by start and end date.
+    A base filter set for filtering by date.
+
+    This filter set provides methods for filtering a queryset based on a start date and end date.
+
+    Attributes:
+        preapproved_at (CharFilter): A filter for the start date.
+        preapproved_at_less (CharFilter): A filter for the end date.
     """
 
     preapproved_at = filters.CharFilter(method="filter_preapproved_at")
@@ -18,9 +26,9 @@ class BaseDateFilterSet(filters.FilterSet):
         Filters the queryset by the start date.
 
         Args:
-            qs: The queryset to filter.
-            name: The name of the filter. Not used in this method but required by the base class.
-            value: The value of the start date filter.
+            qs (QuerySet): The queryset to filter.
+            name (str): The name of the filter. Not used in this method but required by the base class.
+            value (str): The value of the start date filter.
 
         Returns:
             QuerySet: The filtered queryset.
@@ -31,12 +39,12 @@ class BaseDateFilterSet(filters.FilterSet):
 
     def filter_preapproved_less(self, qs, _, value):
         """
-        Filters the queryset by the start date.
+        Filters the queryset by the end date.
 
         Args:
-            qs: The queryset to filter.
-            name: The name of the filter. Not used in this method but required by the base class.
-            value: The value of the start date filter.
+            qs (QuerySet): The queryset to filter.
+            name (str): The name of the filter. Not used in this method but required by the base class.
+            value (str): The value of the end date filter.
 
         Returns:
             QuerySet: The filtered queryset.

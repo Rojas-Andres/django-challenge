@@ -1,5 +1,6 @@
-from customers.strategy import JsonProcessing, TxtProcessing, ProcessingStrategy
 from rest_framework.exceptions import ValidationError
+
+from customers.strategy import JsonProcessing, ProcessingStrategy, TxtProcessing
 
 
 class ProcessingFactory:

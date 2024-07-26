@@ -1,8 +1,9 @@
 from abc import ABC, abstractmethod
-import pandas as pd
-from customers.serializers import CustomerSerializer, CustomerFileSerializer
 
+import pandas as pd
 from rest_framework.exceptions import ValidationError
+
+from customers.serializers import CustomerFileSerializer, CustomerSerializer
 
 
 class ProcessingStrategy(ABC):
@@ -52,8 +53,8 @@ class TxtProcessing(ProcessingStrategy):
         serializer = CustomerFileSerializer(data=request.data)
         if serializer.is_valid():
             file = serializer.validated_data["file"]
-            df = pd.read_csv(file, delimiter=",")
-            serializer = CustomerSerializer(data=df.to_dict(orient="records"), many=True)
+            dataframe = pd.read_csv(file, delimiter=",")
+            serializer = CustomerSerializer(data=dataframe.to_dict(orient="records"), many=True)
             if serializer.is_valid():
                 serializer.save()
                 return serializer.data

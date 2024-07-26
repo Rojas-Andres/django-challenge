@@ -4,7 +4,6 @@ Development settings
 import socket  # only if you haven't already imported this
 
 from .base import *  # noqa
-from .base import INSTALLED_APPS, MIDDLEWARE
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
