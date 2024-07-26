@@ -20,9 +20,13 @@ urlpatterns = [
     # Optional UI:
     path("api/schema/swagger-ui/", SpectacularSwaggerView.as_view(url_name="schema"), name="swagger-ui"),
     path("api/schema/redoc/", SpectacularRedocView.as_view(url_name="schema"), name="redoc"),
+    # apis
+    path("api/customers/", include("customers.urls")),
 ]
 CONFIG_SETTINGS = os.getenv("CONFIG_SETTINGS")
-if CONFIG_SETTINGS == "config.settings.dev":
-    urlpatterns += [
-        path("__debug__/", include("debug_toolbar.urls")),
-    ]
+# if CONFIG_SETTINGS == "config.settings.dev":
+#     import debug_toolbar
+
+#     urlpatterns += [
+#         path("__debug__/", include(debug_toolbar.urls)),
+#     ]

@@ -38,8 +38,8 @@ SWAGGER_SETTINGS = {
     ],
 }
 
-MIDDLEWARE.insert(0, "debug_toolbar.middleware.DebugToolbarMiddleware")
-INSTALLED_APPS += ["debug_toolbar"]
+# MIDDLEWARE.insert(0, "debug_toolbar.middleware.DebugToolbarMiddleware")
+# INSTALLED_APPS += ["debug_toolbar"]
 
 
 CORS_ALLOWED_ORIGINS = [
