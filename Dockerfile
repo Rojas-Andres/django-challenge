@@ -15,9 +15,7 @@ COPY ./supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 COPY ./requirements.txt /usr/src/app
 
-RUN apt update && apt install -y supervisor dos2unix curl && \
-    rm -rf /var/lib/apt/lists/* && \
-    pip install --upgrade pip && \
+RUN pip install --upgrade pip && \
     pip install -r requirements.txt
 
 RUN dos2unix /usr/local/bin/start.sh
