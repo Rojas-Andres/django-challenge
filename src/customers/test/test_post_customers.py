@@ -6,11 +6,11 @@ from django.db.models.query import QuerySet
 from django.urls import reverse
 from django.utils import timezone
 from rest_framework.test import APIClient, APITestCase
-
+from test.test_setup import TestSetup
 from customers.models import Customer
 
 
-class TestCreateCustomers(APITestCase):
+class TestCreateCustomers(TestSetup):
     @classmethod
     def setUpClass(cls) -> None:
         super(TestCreateCustomers, cls).setUpClass()
@@ -40,5 +40,28 @@ class TestCreateCustomers(APITestCase):
             "created_at": timezone.now(),
             "preapproved_at": timezone.now(),
         }
-        response = self.client.post(f"{self.url}?processing_type=xml", body)
+        response = self.client_auth.post(f"{self.url}?processing_type=xml", body)
         assert response.status_code == 422
+
+    def test_auth_create_customer_validate(self):
+        """
+        Test case to verify the filtering of customers based on status.
+
+        This test creates two customer objects with different statuses and sends GET requests
+        with different status parameters to the API endpoint. It then asserts the response
+        status code and the number of results returned by the API.
+
+        Assertions:
+        - The first GET request with status=1 should return a single result with external_id="12".
+        - The second GET request with status=2 should return a single result with external_id="1".
+        - The third GET request with status="1,2" should return two results.
+        """
+        body = {
+            "external_id": "12",
+            "status": 1,
+            "score": 100,
+            "created_at": timezone.now(),
+            "preapproved_at": timezone.now(),
+        }
+        response = self.client.post(f"{self.url}?processing_type=xml", body)
+        assert response.status_code == 401

@@ -3,12 +3,11 @@ from datetime import datetime
 import django
 from django.urls import reverse
 from django.utils import timezone
-from rest_framework.test import APITestCase
-
 from customers.models import Customer
+from test.test_setup import TestSetup
 
 
-class TestGetCustomers(APITestCase):
+class TestGetCustomers(TestSetup):
     @classmethod
     def setUpClass(cls) -> None:
         super(TestGetCustomers, cls).setUpClass()
@@ -49,11 +48,11 @@ class TestGetCustomers(APITestCase):
         query_params = {
             "status": 1,
         }
-        response_filter_1 = self.client.get(self.url, query_params)
+        response_filter_1 = self.client_auth.get(self.url, query_params)
         assert response_filter_1.status_code == 200
         assert len(response_filter_1.json()["results"]) == 1
         assert response_filter_1.json()["results"][0]["external_id"] == "12"
-        response_filter_2 = self.client.get(
+        response_filter_2 = self.client_auth.get(
             self.url,
             {
                 "status": 2,
@@ -62,7 +61,7 @@ class TestGetCustomers(APITestCase):
         assert len(response_filter_2.json()["results"]) == 1
         assert response_filter_2.json()["results"][0]["external_id"] == "1"
 
-        response_filter_3 = self.client.get(
+        response_filter_3 = self.client_auth.get(
             self.url,
             {
                 "status": "1,2",
@@ -91,7 +90,7 @@ class TestGetCustomers(APITestCase):
         query_params = {
             "external_id": "3",
         }
-        response_filter_1 = self.client.get(self.url, query_params)
+        response_filter_1 = self.client_auth.get(self.url, query_params)
         assert response_filter_1.status_code == 200
         assert len(response_filter_1.json()["results"]) == 1
         assert response_filter_1.json()["results"][0]["external_id"] == "3"
@@ -117,7 +116,7 @@ class TestGetCustomers(APITestCase):
         query_params = {
             "page_size": 1,
         }
-        response_filter_1 = self.client.get(self.url, query_params)
+        response_filter_1 = self.client_auth.get(self.url, query_params)
         assert response_filter_1.status_code == 200
         assert len(response_filter_1.json()["results"]) == 1
         assert response_filter_1.json()["total_pages"] == 10
@@ -155,13 +154,13 @@ class TestGetCustomers(APITestCase):
         query_params = {
             "preapproved_at": "2023-02-01",
         }
-        response_filter_1 = self.client.get(self.url, query_params)
+        response_filter_1 = self.client_auth.get(self.url, query_params)
         assert response_filter_1.status_code == 200
         assert len(response_filter_1.json()["results"]) == 2
         query_params = {
             "preapproved_at": "2023-02-04",
         }
-        response_filter_2 = self.client.get(self.url, query_params)
+        response_filter_2 = self.client_auth.get(self.url, query_params)
         assert response_filter_2.status_code == 200
         assert len(response_filter_2.json()["results"]) == 1
 
@@ -177,5 +176,5 @@ class TestGetCustomers(APITestCase):
         query_params = {
             "preapproved_at": "2023-02-01 4",
         }
-        response_filter_1 = self.client.get(self.url, query_params)
+        response_filter_1 = self.client_auth.get(self.url, query_params)
         assert response_filter_1.status_code == 422
