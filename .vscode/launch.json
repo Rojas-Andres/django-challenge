@@ -55,6 +55,20 @@
       "args": ["migrate"],
       "django": true,
       "justMyCode": true
-    }
+    },
+    {
+      "name": "TEST LOCAL Customers",
+      "type": "python",
+      "request": "launch",
+      "program": "${workspaceFolder}/src/manage.py",
+      "envFile": "${workspaceFolder}/.env",
+      "args": [
+          "test",
+          "customers",
+          "--noinput"
+      ],
+      "django": true,
+      "justMyCode": true
+  },
   ]
 }

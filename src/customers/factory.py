@@ -1,5 +1,5 @@
 from customers.strategy import JsonProcessing, TxtProcessing, ProcessingStrategy
-
+from rest_framework.exceptions import ValidationError
 
 class ProcessingFactory:
     strategy_map_processing = {"json": JsonProcessing(), "txt": TxtProcessing()}
@@ -12,5 +12,5 @@ class ProcessingFactory:
     def processing(cls, strategy_name: str, request):
         strategy: ProcessingStrategy = cls.get_strategy(strategy_name=strategy_name)
         if not strategy:
-            raise ValueError(f"Invalid strategy: {strategy_name}")
+            raise ValidationError(f"Invalid strategy: {strategy_name}")
         return strategy.processing(request=request)
