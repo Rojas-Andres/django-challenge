@@ -61,4 +61,4 @@ class LoanUpdateSerializer(serializers.Serializer):
         Check that the status is valid.
         """
         if value not in dict(STATUS_LOAN).keys():  # pylint: disable=C0201
-            raise serializers.ValidationError(MESSAGE_STATUS_PERMISSION_LOAN.format(status=dict(STATUS_LOAN).keys()))  # pylint: disable=C0201
+            raise serializers.ValidationError(MESSAGE_STATUS_PERMISSION_LOAN.format(status=dict(STATUS_LOAN).keys()))  # noqa

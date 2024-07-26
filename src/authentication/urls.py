@@ -6,7 +6,7 @@ from rest_framework_simplejwt.views import TokenRefreshView, TokenVerifyView
 
 from authentication.views import LoginView, LogoutAllView, LogoutView
 
-app_name = "authentication"
+app_name = "authentication"  # pylint: disable=C0103
 
 urlpatterns = [
     path("logout/", LogoutView.as_view(), name="logout"),

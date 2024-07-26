@@ -23,14 +23,18 @@ class CustomerSerializer(serializers.ModelSerializer):
 
 class CustomerSerializerBalance(serializers.ModelSerializer):
     """
-    Serializer for payments, including details and customer information.
+    Serializer class for representing customer balance information.
 
-    Fields:
-        external_id: External ID of the payment.
-        total_amount: Total amount of the payment.
-        status: Status of the payment.
-        customer_external_id: External ID of the customer (write-only).
-        details: List of payment details.
+    This serializer calculates the available amount and total debt for a customer
+    based on their score and outstanding loans.
+
+    Attributes:
+        model (Customer): The Customer model class.
+        fields (list): The list of fields to include in the serialized representation.
+
+    Methods:
+        to_representation(instance): Converts the instance to a serialized representation.
+
     """
 
     class Meta:
@@ -39,13 +43,14 @@ class CustomerSerializerBalance(serializers.ModelSerializer):
 
     def to_representation(self, instance):
         """
-        Customize the representation of the customer instance to include balance and debt information.
+        Converts the given instance into a representation that can be serialized.
 
-        Parameters:
-            instance (Customer): The customer instance being serialized.
+        Args:
+            instance: The instance of the customer model.
 
         Returns:
-            dict: A dictionary containing the external_id, score, available amount, and total debt of the customer.
+            A dictionary containing the serialized representation of the instance,
+            including the external ID, score, available amount, and total debt.
         """
         loans = Loan.objects.filter(customer=instance)
         total_debt = sum(loan.outstanding for loan in loans)

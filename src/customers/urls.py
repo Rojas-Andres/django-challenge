@@ -2,7 +2,7 @@
 
 from django.urls import path
 
-from customers.views import CustomerView, CustomerBalanceView
+from customers.views import CustomerBalanceView, CustomerView
 
 app_name = "customers"  # pylint: disable=C0103
 
