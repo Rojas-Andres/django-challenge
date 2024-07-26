@@ -22,6 +22,7 @@ urlpatterns = [
     path("api/schema/redoc/", SpectacularRedocView.as_view(url_name="schema"), name="redoc"),
     # apis
     path("api/customers/", include("customers.urls")),
+    path("api/loans/", include("loans.urls")),
 ]
 CONFIG_SETTINGS = os.getenv("CONFIG_SETTINGS")
 # if CONFIG_SETTINGS == "config.settings.dev":

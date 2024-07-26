@@ -51,9 +51,9 @@ class TxtProcessing(ProcessingStrategy):
         """
         serializer = CustomerFileSerializer(data=request.data)
         if serializer.is_valid():
-            file = serializer.validated_data['file']
-            df = pd.read_csv(file, delimiter=',')
-            serializer = CustomerSerializer(data=df.to_dict(orient='records'), many=True)
+            file = serializer.validated_data["file"]
+            df = pd.read_csv(file, delimiter=",")
+            serializer = CustomerSerializer(data=df.to_dict(orient="records"), many=True)
             if serializer.is_valid():
                 serializer.save()
                 return serializer.data

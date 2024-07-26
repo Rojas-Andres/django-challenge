@@ -22,7 +22,6 @@ class Loan(BaseModel):
         status (int, optional): The status of the loan.
         outstanding (Decimal, optional): The outstanding balance of the loan.
         taken_at (datetime, optional): The date and time when the loan was taken.
-        maximum_payment_date (datetime, optional): The maximum payment date for the loan.
         customer (Customer): The customer associated with the loan.
     """
 
@@ -32,5 +31,4 @@ class Loan(BaseModel):
     status = models.SmallIntegerField(choices=STATUS_LOAN, default=1)
     outstanding = models.DecimalField(max_digits=12, decimal_places=2, default=0)
     taken_at = models.DateTimeField(null=True, blank=True)
-    maximum_payment_date = models.DateTimeField(null=True, blank=True)
     customer = models.ForeignKey(Customer, related_name="loans", on_delete=models.CASCADE)

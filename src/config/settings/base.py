@@ -36,7 +36,7 @@ THIRD_APPS = [
     "rest_framework.authtoken",
     "dj_rest_auth",
     "dj_rest_auth.registration",
-    "anymail",  # TODO: Review if you use sendgrid
+    "anymail",
     "django_filters",
     "simple_history",
     "drf_spectacular",
