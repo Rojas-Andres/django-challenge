@@ -10,13 +10,11 @@ from rest_framework.views import APIView
 from customers.factory import ProcessingFactory
 from customers.filters import CustomerFilters
 from customers.models import Customer
-from customers.serializers import CustomerSerializer
+from customers.serializers import CustomerSerializer, CustomerSerializerBalance
 from utils.pagination import StandardResultsSetPagination
 
 
-class CustomerView(GenericAPIView):
-    """View for retrieving the created appointment."""
-
+class CustomerViewTemplate(GenericAPIView):
     serializer_class = CustomerSerializer
     filter_backends = (SearchFilter, OrderingFilter, DjangoFilterBackend)
     pagination_class = StandardResultsSetPagination
@@ -51,6 +49,10 @@ class CustomerView(GenericAPIView):
 
         return paginator.get_paginated_response(serializer.data)
 
+
+class CustomerView(CustomerViewTemplate):
+    """View for retrieving the created appointment."""
+
     def post(self, request):
         """Handle POST request."""
         try:
@@ -67,3 +69,14 @@ class CustomerView(GenericAPIView):
                 {"error": str(e)},
                 status=500,
             )
+
+
+class CustomerBalanceView(CustomerViewTemplate):
+    """
+    API endpoint for retrieving the balance of all customers.
+
+    Methods:
+        get: Retrieve the balance of all customers.
+    """
+
+    serializer_class = CustomerSerializerBalance
