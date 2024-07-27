@@ -37,6 +37,9 @@ jobs:
         run: echo "${{ secrets.ENVIRONMENT_VARIABLES }}" > .env
       - name: Run Tests with Coverage
         run: docker-compose -f docker-compose.testing.yml run django sh -c "coverage run manage.py test"
+
+      - name: Run Tests with Coverage
+        run: docker-compose -f docker-compose.testing.yml run --rm django sh -c "coverage report"
       - name: Validate Coverage
         run: |
           COVERAGE_PERCENTAGE=$(docker-compose -f docker-compose.testing.yml run --rm django sh -c "coverage report" | awk '/TOTAL/ {print $NF}' | tr -d '%')
@@ -45,17 +48,6 @@ jobs:
             echo "Coverage percentage is below 80% ($COVERAGE_PERCENTAGE%)"
             exit 1
           fi
-          echo "Generate coverage xml"
-          docker-compose -f docker-compose.testing.yml run --rm django sh -c "coverage xml"
-          docker-compose -f docker-compose.testing.yml run --rm django sh -c "coverage html"
-          CONTAINER_ID=$(docker-compose -f docker-compose.testing.yml ps -a -q django)
-          echo "Container ID: $CONTAINER_ID"
-          docker ps
-          docker ps -a
-          docker cp $CONTAINER_ID:/src/coverage.xml .
-          echo "show coverage.xml"
-          ls -1 | grep 'coverage'
-          echo "End coverage.xml"
       - name: Save coverage.xml as artifact
         uses: actions/upload-artifact@v2
         with:
