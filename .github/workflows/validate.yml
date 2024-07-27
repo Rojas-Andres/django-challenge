@@ -38,7 +38,7 @@ jobs:
       - name: Run Tests with Coverage
         run: docker-compose -f docker-compose.testing.yml run django sh -c "coverage run manage.py test"
       - name: Show reports Reports
-        run: docker-compose -f docker-compose.testing.yml run django sh -c "coverage report"
+        run: docker-compose -f docker-compose.testing.yml run --rm django sh -c "coverage report"
       - name: Validate Coverage
         run: |
           COVERAGE_PERCENTAGE=$(docker-compose -f docker-compose.testing.yml run --rm django sh -c "coverage report" | awk '/TOTAL/ {print $NF}' | tr -d '%')
