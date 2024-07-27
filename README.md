@@ -129,19 +129,17 @@
 - `cd src`
 - `python manage.py test`
 
-## Test coverage
+### Pruebas unitarias con docker-compose
 
-### With Docker
+- `docker-compose -f docker-compose.testing.yml run --rm django sh -c "coverage run --source=. manage.py test --noinput"`
 
-- `docker-compose -f docker-compose.local.yml run --rm django sh -c "coverage run --source=. manage.py test --noinput"`
+- Para ver el reporte del coverage:
 
-To see the report:
+- `docker-compose -f docker-compose.testing.yml run --rm django sh -c "coverage report"`
 
-- `docker-compose -f docker-compose.local.yml run --rm django sh -c "coverage report"`
+Generar el reporte en HTML:
 
-To generate html report:
-
-- `docker-compose -f docker-compose.local.yml run --rm django sh -c "coverage html"`
+- `docker-compose -f docker-compose.testing.yml run --rm django sh -c "coverage html"`
 
 ### With Virtualenv
 
@@ -156,12 +154,22 @@ To generate html report:
 
 - `coverage html`
 
+
+
+
 ## Linter
 
 Use pre-commit to run linter before commit, the command is:
 
 - `pre-commit run --all-files`
 
-## Docker build local
-` docker build --no-cache -t stack_django . `
-` docker run -p 8000:8000 stack_django `
+
+
+### Consideraciones
+
+## Docker build ECR and push
+- login
+    - aws ecr-public get-login-password --region us-east-1 --profile pheno | docker login --username AWS --password-stdin public.ecr.aws
+- docker build -t ecr_template:v1 -f ecr.Dockerfile .
+- docker tag ecr_template:v1 public.ecr.aws/f5k9u7m7/ecr_template_python_fargate:latest
+- docker push public.ecr.aws/f5k9u7m7/ecr_template_python_fargate:latest
