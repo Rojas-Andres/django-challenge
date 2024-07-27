@@ -192,7 +192,7 @@ class TestCreatePayment(TestSetup):
         }
         response = self.client_auth.post(self.url, body_payment, format="json")
         assert response.status_code == 201
-        assert response.json() == {'message': 'Pago realizado con éxito.'}
+        assert response.json() == {"message": "Pago realizado con éxito."}
 
     def test_error_duplicate_payment(self):
         """
@@ -226,7 +226,7 @@ class TestCreatePayment(TestSetup):
         }
         response = self.client_auth.post(self.url, body_payment, format="json")
         assert response.status_code == 201
-        assert response.json() == {'message': 'Pago realizado con éxito.'}
+        assert response.json() == {"message": "Pago realizado con éxito."}
         body_payment = {
             "payment_detail": [
                 {
@@ -241,4 +241,4 @@ class TestCreatePayment(TestSetup):
         }
         response = self.client_auth.post(self.url, body_payment, format="json")
         assert response.status_code == 422
-        assert response.json()["payment"] == {'external_id': ['El external_id 123 ya existe con el pago.']}
+        assert response.json()["payment"] == {"external_id": ["El external_id 123 ya existe con el pago."]}
