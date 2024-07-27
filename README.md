@@ -4,7 +4,29 @@
 
 
 
-#### Validaciones
+### Patrones de diseño usados
+
+## Creacion de customers
+- Para procesar y crear clientes, se utiliza una fábrica que selecciona la estrategia adecuada basada en el tipo de procesamiento solicitado. Esto evita el uso de múltiples sentencias if y facilita la extensión del sistema. La fábrica se implementa mediante la clase ProcessingFactory, que utiliza un mapa (strategy_map_processing) para asociar nombres de estrategias con sus respectivas implementaciones.
+
+- Uso del Patrón Factory
+
+El patrón Factory se implementa mediante la clase ProcessingFactory, que proporciona métodos para obtener y ejecutar la estrategia de procesamiento adecuada.
+Explicación del Mapa de Estrategias
+
+El mapa strategy_map_processing asocia nombres de estrategias (json, txt) con instancias de las clases que implementan esas estrategias (JsonProcessing, TxtProcessing). Esto permite seleccionar y ejecutar la estrategia adecuada sin necesidad de múltiples sentencias if.
+
+# Cumplimiento de los Principios SOLID
+
+- Single Responsibility Principle (SRP): La clase ProcessingFactory tiene una única responsabilidad: seleccionar y ejecutar la estrategia de procesamiento adecuada.
+
+- Open/Closed Principle (OCP): El sistema está abierto a la extensión pero cerrado a la modificación. Si se necesita añadir una nueva estrategia de procesamiento (por ejemplo, CSV, XLS), se puede añadir una nueva entrada al mapa strategy_map_processing sin modificar el código existente.
+
+- Liskov Substitution Principle (LSP): Las estrategias (JsonProcessing, TxtProcessing) pueden sustituir a la interfaz ProcessingStrategy sin alterar el comportamiento del programa.
+
+- Interface Segregation Principle (ISP): La interfaz ProcessingStrategy es específica y no obliga a las clases que la implementan a depender de métodos que no utilizan.
+
+- Dependency Inversion Principle (DIP): El código depende de abstracciones (ProcessingStrategy) y no de implementaciones concretas.
 
 
 ### Prestamos (loan)

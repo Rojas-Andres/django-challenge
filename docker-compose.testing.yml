@@ -10,7 +10,7 @@ services:
     ports:
       - "8000:8000"
     volumes:
-      - ./src:/src
+      - ./src:/usr/src/app/
     depends_on:
       - db
     restart: on-failure
