@@ -25,11 +25,7 @@ class TestCreatePayment(TestSetup):
 
     def test_customer_not_found_create_payment(self):
         """
-        Test case for creating a payment.
-
-        This test case verifies that a payment can be successfully created by sending a POST request to the specified URL
-        with the required parameters. It checks that the response status code is 201, indicating a successful creation.
-
+        Test case to verify that a payment cannot be created if the customer does not exist.
         """
         body_payment = {
             "payment_detail": [
@@ -49,11 +45,7 @@ class TestCreatePayment(TestSetup):
 
     def test_loan_not_found_create_payment(self):
         """
-        Test case for creating a payment.
-
-        This test case verifies that a payment can be successfully created by sending a POST request to the specified URL
-        with the required parameters. It checks that the response status code is 201, indicating a successful creation.
-
+        Test case to verify that a payment cannot be created if the loan_external_id does not exist.
         """
         body_payment = {
             "payment_detail": [
@@ -73,10 +65,13 @@ class TestCreatePayment(TestSetup):
 
     def test_invalid_amount_to_create_payment(self):
         """
-        Test case for creating a payment.
+        Test case to verify that an invalid payment amount raises the expected error.
 
-        This test case verifies that a payment can be successfully created by sending a POST request to the specified URL
-        with the required parameters. It checks that the response status code is 201, indicating a successful creation.
+        The test sends a request to create a payment with an amount that is greater than the pending loan balance.
+        It expects the response status code to be 422 (Unprocessable Entity) and the response JSON to contain an error message
+        indicating that the payment amount cannot be greater than the pending loan balance.
+
+        This test helps ensure that the payment creation endpoint correctly handles invalid payment amounts.
 
         """
         body_payment = {
@@ -99,10 +94,12 @@ class TestCreatePayment(TestSetup):
 
     def test_duplicate_loan_payment(self):
         """
-        Test case for creating a payment.
+        Test case to verify that duplicate loan payments are handled correctly.
 
-        This test case verifies that a payment can be successfully created by sending a POST request to the specified URL
-        with the required parameters. It checks that the response status code is 201, indicating a successful creation.
+        This test sends a POST request to the specified URL with a payment body that contains
+        two payment details with the same loan_external_id. The test expects the response status
+        code to be 422 (Unprocessable Entity) and the response JSON to contain an error message
+        indicating the presence of a duplicate loan_external_id.
 
         """
         body_payment = {
@@ -127,10 +124,11 @@ class TestCreatePayment(TestSetup):
 
     def test_loan_pending_not_create_payment(self):
         """
-        Test case for creating a payment.
+        Test case to verify that a payment cannot be created when the loan is not active.
 
-        This test case verifies that a payment can be successfully created by sending a POST request to the specified URL
-        with the required parameters. It checks that the response status code is 201, indicating a successful creation.
+        This test sends a POST request to the specified URL with a payment payload that includes a loan_external_id
+        for a loan that is not in an active state. The test expects the response status code to be 422 (Unprocessable Entity)
+        and the response body to contain an error message indicating that the loan is not active.
 
         """
         body_payment = {
@@ -153,11 +151,8 @@ class TestCreatePayment(TestSetup):
 
     def test_negative_payment(self):
         """
-        Test case for creating a payment.
-
-        This test case verifies that a payment can be successfully created by sending a POST request to the specified URL
-        with the required parameters. It checks that the response status code is 201, indicating a successful creation.
-
+        Test case to verify that a negative payment amount returns a 422 status code
+        and the appropriate error message in the response.
         """
         body_payment = {
             "payment_detail": [
@@ -176,6 +171,13 @@ class TestCreatePayment(TestSetup):
         assert response.json()["payment_detail"] == [{"amount": ["El monto no puede ser negativo"]}]
 
     def test_payment_create_success(self):
+        """
+        Test case to verify successful creation of a payment.
+
+        This test sends a POST request to the specified URL with a payment payload.
+        It asserts that the response status code is 201 (Created) and the response JSON
+        matches the expected message indicating successful payment creation.
+        """
         body_payment = {
             "payment_detail": [
                 {
@@ -193,6 +195,23 @@ class TestCreatePayment(TestSetup):
         assert response.json() == {'message': 'Pago realizado con éxito.'}
 
     def test_error_duplicate_payment(self):
+        """
+        Test case to verify the behavior when a duplicate payment is made.
+
+        This test sends a payment request with the same external_id as an existing payment.
+        It expects the server to return a 422 status code and a specific error message.
+
+        Steps:
+        1. Create a payment request with a specific external_id and customer_external_id.
+        2. Send the payment request to the server.
+        3. Verify that the response status code is 201 (indicating success).
+        4. Verify that the response JSON message is 'Pago realizado con éxito.' (Payment made successfully).
+        5. Create another payment request with the same external_id and customer_external_id.
+        6. Send the second payment request to the server.
+        7. Verify that the response status code is 422 (indicating a validation error).
+        8. Verify that the response JSON contains the expected error message for the payment field.
+
+        """
         body_payment = {
             "payment_detail": [
                 {
