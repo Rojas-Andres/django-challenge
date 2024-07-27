@@ -2,11 +2,9 @@
 name: Checks and Linting code
 
 on:
-  pull_request:
+  push:
     branches:
       - master
-      - develop
-      - staging
 
 jobs:
   pre-commit-validate:
