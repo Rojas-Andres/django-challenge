@@ -5,7 +5,12 @@ from rest_framework.exceptions import ValidationError
 from customers.models import Customer
 from loans.models import Loan
 from payments.models import Payment, PaymentDetail
-from utils.messages import MESSAGE_AMOUNT_GREATHER
+from utils.messages import (
+    MESSAGE_AMOUNT_GREATHER,
+    MESSAGE_PAYMENT_NOT_FOUND,
+    MESSAGE_PAYMENT_STATUS,
+    MESSAGE_PAYMENT_UPDATE_ACTIVE_REJECTED,
+)
 
 
 class PaymentService:
@@ -67,3 +72,15 @@ class PaymentService:
             loan.outstanding -= payment_detail.amount
             payment_detail.save()
             loan.save()
+
+    @staticmethod
+    def update_payment_status(payment_external_id: str, status: int):
+        payment = Payment.objects.filter(external_id=payment_external_id).first()
+        if not payment:
+            raise ValidationError({"error": MESSAGE_PAYMENT_NOT_FOUND})
+        if payment.status == status:
+            raise ValidationError({"error": MESSAGE_PAYMENT_STATUS})
+        if payment.status == 2 and status == 1:
+            raise ValidationError({"error": MESSAGE_PAYMENT_UPDATE_ACTIVE_REJECTED})
+        payment.status = status
+        payment.save()

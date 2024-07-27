@@ -1,9 +1,11 @@
+from test.test_setup import TestSetup
+
 import django
 from django.urls import reverse
 from django.utils import timezone
+
 from customers.models import Customer
 from loans.models import Loan
-from test.test_setup import TestSetup
 
 
 class TestCreatePayment(TestSetup):
@@ -15,6 +17,7 @@ class TestCreatePayment(TestSetup):
     def setUp(self):
         super().setUp()
         self.url = reverse("payments:payment")
+        self.url_loan = reverse("loans:loan")
         self.customer = Customer.objects.create(external_id="12", status=1, score=10000, preapproved_at=timezone.now())
         self.loan = Loan.objects.create(
             external_id="loan_external-1", amount=1000, outstanding=1000, status=2, customer=self.customer

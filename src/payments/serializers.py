@@ -2,7 +2,7 @@ from rest_framework import serializers
 
 from customers.models import Customer
 from loans.models import Loan
-from payments.models import Payment
+from payments.models import STATUS_PAYMENTS, Payment
 from utils.messages import (
     MESSAGE_AMOUNT_NOT_NEGATIVE,
     MESSAGE_CUSTOMER_EXTERNAL_ID_NOT_FOUND,
@@ -10,6 +10,7 @@ from utils.messages import (
     MESSAGE_LOAD_EXTERNAL_ID_NOT_FOUND,
     MESSAGE_NOT_PERMISSION_PAYMENT,
     MESSAGE_PAYMENT_EXTERNAL_ID_EXISTS,
+    MESSAGE_STATUS_PERMISSION,
 )
 
 
@@ -94,3 +95,23 @@ class PaymentSerializer(serializers.Serializer):
                 )
             seen_ids.add(loan_external_id)
         return value
+
+
+class PaymentUpdateSerializer(serializers.Serializer):
+    """
+    Serializer for updating loan information.
+
+    Attributes:
+        external_id (int): The external ID of the loan.
+        status (int): The status of the loan.
+    """
+
+    external_id = serializers.CharField(required=True, max_length=60)
+    status = serializers.IntegerField(required=True)
+
+    def validate_status(self, value):
+        """
+        Check that the status is valid.
+        """
+        if value not in dict(STATUS_PAYMENTS).keys():  # pylint: disable=C0201
+            raise serializers.ValidationError(MESSAGE_STATUS_PERMISSION.format(status=dict(STATUS_PAYMENTS).keys()))  # noqa
