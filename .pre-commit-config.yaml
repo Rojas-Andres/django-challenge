@@ -25,7 +25,6 @@ repos:
     - id: file-contents-sorter
     - id: detect-private-key
     - id: check-merge-conflict
-    - id: check-json
     - id: check-docstring-first
     - id: check-ast
 

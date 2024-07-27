@@ -22,6 +22,7 @@ urlpatterns = [
     # apis
     path("api/customers/", include("customers.urls")),
     path("api/loans/", include("loans.urls")),
+    path("api/payments/", include("payments.urls")),
 ]
 CONFIG_SETTINGS = os.getenv("CONFIG_SETTINGS")
 # if CONFIG_SETTINGS == "config.settings.dev":

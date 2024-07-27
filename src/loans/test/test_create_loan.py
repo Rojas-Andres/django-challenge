@@ -69,6 +69,4 @@ class TestCreateLoans(TestSetup):
         }
         response = self.client_auth.post(self.url_loan, body_loan, format="json")
         assert response.status_code == 422
-        assert (
-            response.json() == {'amount': ['This field is required.']}
-        )
+        assert response.json() == {"amount": ["This field is required."]}

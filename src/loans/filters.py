@@ -1,6 +1,3 @@
-from datetime import datetime
-
-import pytz  # type: ignore
 from django_filters import rest_framework as filters
 
 from loans.models import Loan

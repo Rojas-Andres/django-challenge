@@ -5,11 +5,11 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from customers.models import Customer
+from loans.filters import LoanFilters
 from loans.models import Loan
-from loans.serializers import LoanSerializer, LoanUpdateSerializer, LoanSerializerObjects
+from loans.serializers import LoanSerializer, LoanSerializerObjects, LoanUpdateSerializer
 from loans.services import LoanService
 from utils.messages import MESSAGE_LOAN_CREATE
-from loans.filters import LoanFilters
 from utils.views_template import ViewTemplateFilters
 
 

@@ -1,10 +1,11 @@
 from rest_framework.exceptions import ValidationError
 from rest_framework.response import Response
-from utils.views_template import ViewTemplateFilters
+
 from customers.factory import ProcessingFactory
 from customers.filters import CustomerFilters
 from customers.models import Customer
 from customers.serializers import CustomerSerializer, CustomerSerializerBalance
+from utils.views_template import ViewTemplateFilters
 
 
 class CustomerViewTemplate(ViewTemplateFilters):
