@@ -13,10 +13,10 @@ RUN chmod +x /usr/local/bin/start.sh
 
 COPY ./supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
-COPY ./requirements.txt /usr/src/app
+COPY ./requirements /usr/src/app/requirements/
 
 RUN pip install --upgrade pip && \
-    pip install -r requirements.txt
+    pip install -r requirements/prod.txt
 
 RUN dos2unix /usr/local/bin/start.sh
 

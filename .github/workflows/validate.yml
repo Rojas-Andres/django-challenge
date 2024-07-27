@@ -48,8 +48,3 @@ jobs:
             echo "Coverage percentage is below 80% ($COVERAGE_PERCENTAGE%)"
             exit 1
           fi
-      - name: Save coverage.xml as artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: coverage-xml
-          path: coverage.xml
