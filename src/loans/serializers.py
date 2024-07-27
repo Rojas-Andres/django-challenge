@@ -4,6 +4,37 @@ from loans.models import STATUS_LOAN, Loan
 from utils.messages import MESSAGE_AMOUNT_NOT_NEGATIVE, MESSAGE_STATUS_PERMISSION_LOAN
 
 
+class LoanSerializerObjects(serializers.ModelSerializer):
+    """
+    Serializer for payments, including details and customer information.
+
+    Fields:
+        external_id: External ID of the payment.
+        total_amount: Total amount of the payment.
+        status: Status of the payment.
+        customer_external_id: External ID of the customer (write-only).
+        details: List of payment details.
+    """
+
+    customer_external_id = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Loan
+        fields = ["external_id", "customer_external_id", "amount", "outstanding", "status"]
+
+    def get_customer_external_id(self, obj):
+        """
+        Method to get the external_id of the customer.
+
+        Args:
+            obj (Loan): The loan object.
+
+        Returns:
+            str: The external_id of the customer.
+        """
+        return obj.customer.external_id if obj.customer else None
+
+
 class LoanSerializer(serializers.ModelSerializer):
     """
     Serializer for payments, including details and customer information.

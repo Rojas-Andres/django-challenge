@@ -31,4 +31,4 @@ class Loan(BaseModel):
     status = models.SmallIntegerField(choices=STATUS_LOAN, default=1)
     outstanding = models.DecimalField(max_digits=12, decimal_places=2, default=0)
     taken_at = models.DateTimeField(null=True, blank=True)
-    customer = models.ForeignKey(Customer, related_name="loans", on_delete=models.CASCADE)
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)

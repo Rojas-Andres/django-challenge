@@ -5,15 +5,31 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from customers.models import Customer
-from loans.serializers import LoanSerializer, LoanUpdateSerializer
+from loans.models import Loan
+from loans.serializers import LoanSerializer, LoanUpdateSerializer, LoanSerializerObjects
 from loans.services import LoanService
 from utils.messages import MESSAGE_LOAN_CREATE
+from loans.filters import LoanFilters
+from utils.views_template import ViewTemplateFilters
 
 
-class LoanView(APIView):
+class LoanView(ViewTemplateFilters):
     """View for retrieving the created appointment."""
 
     permission_classes = [IsAuthenticated]
+
+    serializer_class = LoanSerializerObjects
+    filterset_class = LoanFilters
+
+    def get_queryset(self):
+        """
+        Override of the get_queryset method to allow filtering by attorney_client.
+
+        Returns:
+            QuerySet: The queryset of Customer objects.
+        """
+        get_queryset = Loan.objects.filter(deleted_at=None)
+        return get_queryset
 
     def post(self, request):
         """Handle POST request."""
