@@ -84,5 +84,19 @@
       "django": true,
       "justMyCode": true
     },
+    {
+      "name": "TEST LOCAL Loan",
+      "type": "python",
+      "request": "launch",
+      "program": "${workspaceFolder}/src/manage.py",
+      "envFile": "${workspaceFolder}/.env",
+      "args": [
+          "test",
+          "loans",
+          "--noinput"
+      ],
+      "django": true,
+      "justMyCode": true
+    },
   ]
 }
