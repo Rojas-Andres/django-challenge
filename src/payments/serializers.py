@@ -17,7 +17,7 @@ class PaymentDetailSerializer(serializers.Serializer):
     loan_external_id = serializers.CharField(max_length=60)
     amount = serializers.IntegerField()
 
-    def validate_load_external_id(self, value):
+    def validate_loan_external_id(self, value):
         """
         Verifica que el loan ID exista en el modelo Loan.
         """
@@ -87,10 +87,10 @@ class PaymentSerializer(serializers.Serializer):
         """
         seen_ids = set()
         for detail in value:
-            load_external_id = detail.get("load_external_id")
-            if load_external_id in seen_ids:
+            loan_external_id = detail.get("loan_external_id")
+            if loan_external_id in seen_ids:
                 raise serializers.ValidationError(
-                    MESSAGE_EXTERNAL_ID_DUPLICATE.format(load_external_id=load_external_id)
+                    MESSAGE_EXTERNAL_ID_DUPLICATE.format(loan_external_id=loan_external_id)
                 )
-            seen_ids.add(load_external_id)
+            seen_ids.add(loan_external_id)
         return value

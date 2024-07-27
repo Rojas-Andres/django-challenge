@@ -98,5 +98,19 @@
       "django": true,
       "justMyCode": true
     },
+    {
+      "name": "TEST LOCAL payments",
+      "type": "python",
+      "request": "launch",
+      "program": "${workspaceFolder}/src/manage.py",
+      "envFile": "${workspaceFolder}/.env",
+      "args": [
+          "test",
+          "payments",
+          "--noinput"
+      ],
+      "django": true,
+      "justMyCode": true
+    },
   ]
 }
