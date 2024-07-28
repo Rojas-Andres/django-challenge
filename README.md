@@ -1,4 +1,4 @@
-# Stack for Django Projects by Andres Rojas
+# Challange by Andres Rojas
 
 
 ### Patrones de diseño usados
@@ -64,40 +64,34 @@ El mapa strategy_map_processing asocia nombres de estrategias (json, txt) con in
 
 - Consideraciones:
     - El status del pago deberia de ser pending, rejected y activo . En la prueba tecnica solo esta rejected y activo, pero generalmente el pago esta en pendiente y luego se activa o se rechaza. El funcionamiento actual es que cuando se crea el pago por defecto esta en activo. Por lo tanto hay otra api para actualizar el pago a rechazado y cuando se rechaza un pago los outsading de ese pago vuelven a ser su valor original
+
 ## Features
 
 - Swagger and postman are used for documentation
 
-## Requirements
-
-- Docker
-- docker-compose
-
-## Run
+## correr proyecto
 
 ### Setup
 
 1. Clone repository:
 
-- `git clone git@github.com:Rojas-Andres/django_stack.git`
-- `cd django_stack`
-
-### Run With Docker
+- `git clone git@github.com:Rojas-Andres/django-challenge.git`
+- `cd django-challenge`
 
 2. Copy `.env.example` to `.env` and custom:
 
 - `cp .env.example .env`
 
-3. docker-compose
 
-- `docker-compose -f docker-compose.dev.yml build`
-- `docker-compose -f docker-compose.dev.yml up`
+### Correr proyecto con docker (recordar crear el .env en la raiz)
+- ` docker-compose -f docker-compose.dev.yml build `
+- ` docker-compose -f docker-compose.dev.yml up `
+
+![](images/local_env/docker_compose_local_run.png)
+
 
 ### Run With Virtualenv
 
-1. Copy `.env.example` to `.env` and custom:
-
-- `cp .env.example .env`
 
 1. Create virtualenv and activate
 
@@ -105,40 +99,18 @@ El mapa strategy_map_processing asocia nombres de estrategias (json, txt) con in
 - `source venv/bin/activate` _(Linux)_
 - `./venv/Scripts/activate` _(Windows)_
 
-4. Install requirements
+2. Install requirements
 
-- `pip install -r /requirements.txt`
+- `pip install -r /requirements/local.txt`
 
-1. Run
+3. Run
 
 - `cd src`
 - `python manage.py runserver`
 
-## Migrations With Docker
+####  Test
 
-### With Docker
-
-- `docker-compose -f docker-compose.dev.yml run --rm django sh -c "python manage.py makemigrations"`
-- `docker-compose -f docker-compose.dev.yml run --rm django sh -c "python manage.py migrate"`
-
-### With Virtualenv
-
-- `cd src`
-- `python manage.py makemigrations`
-- `python manage.py migrate`
-
-## Create new app
-
-## Test
-
-## Correr proyecto con docker (recordar crear el .env en la raiz)
-- ` docker-compose -f docker-compose.dev.yml build `
-- ` docker-compose -f docker-compose.dev.yml up `
-
-![](images/local_env/docker_compose_local_run.png)
-
-
-### With Virtualenv
+### Pruebas unitarias con entorno virtual
 
 - `cd src`
 - `python manage.py test`
@@ -158,7 +130,7 @@ Generar el reporte en HTML:
 
 ![](images/local_env/testing_local.png)
 
-### With Virtualenv
+### Testing con el entorno virtual
 
 - `cd src`
 - `coverage run --source=. manage.py test --noinput`
@@ -172,15 +144,11 @@ To generate html report:
 - `coverage html`
 
 
-
-
-## Linter
+## Linter para la validacion de codigo
 
 Use pre-commit to run linter before commit, the command is:
 
 - `pre-commit run --all-files`
-
-
 
 ### Consideraciones
 
