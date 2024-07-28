@@ -1,9 +1,9 @@
 # Challange by Andres Rojas
 
 
-### Patrones de diseño usados
+## Patrones de diseño usados
 
-## Creacion de customers
+#### Creacion de customers
 - Para procesar y crear clientes, se utiliza una fábrica que selecciona la estrategia adecuada basada en el tipo de procesamiento solicitado. Esto evita el uso de múltiples sentencias if y facilita la extensión del sistema. La fábrica se implementa mediante la clase ProcessingFactory, que utiliza un mapa (strategy_map_processing) para asociar nombres de estrategias con sus respectivas implementaciones.
 
 - Uso del Patrón Factory
@@ -13,7 +13,7 @@ Explicación del Mapa de Estrategias
 
 El mapa strategy_map_processing asocia nombres de estrategias (json, txt) con instancias de las clases que implementan esas estrategias (JsonProcessing, TxtProcessing). Esto permite seleccionar y ejecutar la estrategia adecuada sin necesidad de múltiples sentencias if.
 
-# Cumplimiento de los Principios SOLID
+#### Cumplimiento de los Principios SOLID
 
 - Single Responsibility Principle (SRP): La clase ProcessingFactory tiene una única responsabilidad: seleccionar y ejecutar la estrategia de procesamiento adecuada.
 
@@ -26,7 +26,7 @@ El mapa strategy_map_processing asocia nombres de estrategias (json, txt) con in
 - Dependency Inversion Principle (DIP): El código depende de abstracciones (ProcessingStrategy) y no de implementaciones concretas.
 
 
-### Prestamos (loan)
+#### Prestamos (loan)
 	- Cuando se crea un prestamo el valor del amount como el valor de outstanding es el mismo porque como tal el prestamo ha sido creado y no se ha abonado nada.
 	- El prestamo no puede ser modificado luego que se cambie a active.
 	- El amount de prestamo no puede exceder el score de customer.
@@ -37,8 +37,8 @@ El mapa strategy_map_processing asocia nombres de estrategias (json, txt) con in
 	Update:
 		- No se puede modificar un prestamo ya activo ni rechazado , esto con el fin de no modificar el amount de un prestamo cuando ya se activo
 
-###  Payments
-# Creacion de pagos json - POST - /api/payments/
+####  Payments
+##### Creacion de pagos json - POST - /api/payments/
 {
     "payment_detail": [
         {
@@ -65,6 +65,11 @@ El mapa strategy_map_processing asocia nombres de estrategias (json, txt) con in
 - Consideraciones:
     - El status del pago deberia de ser pending, rejected y activo . En la prueba tecnica solo esta rejected y activo, pero generalmente el pago esta en pendiente y luego se activa o se rechaza. El funcionamiento actual es que cuando se crea el pago por defecto esta en activo. Por lo tanto hay otra api para actualizar el pago a rechazado y cuando se rechaza un pago los outsading de ese pago vuelven a ser su valor original
 
+
+### Filters para peticiones tipo GET
+- En caso de las peticiones tipo get implemente una vista generica que contiene todo lo necesario para el filtrado la cual es ViewTemplateFilters, esta vista ya tiene integrado la paginacion, los query_param y en el caso de tener un filter personalizado solo seria colocarlo en cada vista que requiera el tipo get. En cada aplicacion que realice filters se encuentra un archivo filters que hace referencia a ese tipo de filtrado en especifico de esa api.
+
+
 ## Features
 
 - Swagger and postman are used for documentation
@@ -89,9 +94,68 @@ El mapa strategy_map_processing asocia nombres de estrategias (json, txt) con in
 
 ![](images/local_env/docker_compose_local_run.png)
 
+### Validaciones github actions , pre-commit -> coverage -> deploy
+
+#### Validacion pre-commit
+![](images/github_actions_validation/pre-commit-validate-github.png)
+
+#### Validacion coverage
+![](images/github_actions_validation/testing-coverage-github.png)
+
+#### Validacion deploy ecs fargate
+![](images/github_actions_validation/github-actions-deploy-django-ecs-fargate.png)
+
+#### Validacion validaciones success
+
+- Las validaciones se pueden ver en actions de github
+![](images/github_actions_validation/success_pipeline.png)
+
+
+
+#### Deployment en ECS fargate
+
+- Se despliega el cluster de ecs, la definicion de tarea
+![](images/deployment_cdk/task_run_success.png)
+
+- Se ejecuta la tarea donde esta la aplicacion de django
+![](images/deployment_cdk/task_run.png)
+
+- Registros de la tarea
+![](images/deployment_cdk/records_task.png)
+
+
+- Despliegue del Load balancer
+![](images/deployment_cdk/load_balancer.png)
+
+http://django-lb8a1-dmkffoleebi1-1056492271.us-east-2.elb.amazonaws.com:8000/
+
+![](images/deployment_cdk/show_healtcheck.png)
+
+- Swagger Inteface
+    - Personalmente el swagger de django no me gusta pero aca lo dejo aunque faltaria mejorarlo en terminos de query params. Prefiero usar postman aunque toca agregar api por api.
+![](images/deployment_cdk/swagger_interface.png)
+
+
+## Deployment domain
+
+- Domain https://develop.andres-rojas-l.live/
+
+![](images/domain_deploy/domain_deploy.png)
+
+- Login user domain
+
+![](images/domain_deploy/login_user_domain.png)
+https://develop.andres-rojas-l.live/api/auth/login/
+{
+    "email":"andresrojas@gmail.com",
+    "password":"123456"
+}
+
+
+- Recordar que el resto de apis estan protegidas entonces se debe de pasar el Bearer Token obtenido del login
+
 
 ### Run With Virtualenv
-
 
 1. Create virtualenv and activate
 
