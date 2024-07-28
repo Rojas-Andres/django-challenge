@@ -1,6 +1,7 @@
 """
 Create ECS cluster
 """
+
 import aws_cdk as core
 from aws_cdk import (
     aws_ec2 as ec2,
@@ -8,6 +9,7 @@ from aws_cdk import (
     aws_elasticloadbalancingv2 as elbv2,
     aws_iam as iam,
     aws_logs as logs,
+    aws_s3 as s3,
 )
 from constructs import Construct
 
@@ -22,9 +24,11 @@ class ClusterStack(core.Stack):
         cluster_name = f"{stack_name}EcsCluster"
         task_family_name = f"{stack_name}TaskFamily"
         execution_role_name = f"EcsExecutionRole{cluster_name}"
+        environment_bucket_name = f"S3Environments{cluster_name}"
         log_group_name = f"/ecs/{cluster_name}"
 
         ecr_repository = self.node.try_get_context("REPOSITORY_ECR") or "default_task_family"
+        bucket = s3.Bucket(self, environment_bucket_name, bucket_name=environment_bucket_name)
 
         log_group = logs.LogGroup(
             self,
