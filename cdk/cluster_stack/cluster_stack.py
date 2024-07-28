@@ -90,6 +90,12 @@ class ClusterStack(core.Stack):
                 retries=3,
                 start_period=core.Duration.seconds(30),
             ),
+            environment_files=[
+                ecs.EnvironmentFile.from_bucket(
+                    bucket=s3.Bucket.from_bucket_arn(self, "EnvFileBucket", f"arn:aws:s3:::{environment_bucket_name}"),
+                    key="develop.env"
+                )
+            ],
         )
 
         container.add_port_mappings(ecs.PortMapping(container_port=8000, protocol=ecs.Protocol.TCP))
