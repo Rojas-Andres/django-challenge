@@ -102,6 +102,11 @@ El mapa strategy_map_processing asocia nombres de estrategias (json, txt) con in
 #### Validacion coverage
 ![](images/github_actions_validation/testing-coverage-github.png)
 
+
+#### Total de test ejecutados
+![](images/github_actions_validation/total_Test.png)
+
+
 #### Validacion deploy ecs fargate
 ![](images/github_actions_validation/github-actions-deploy-django-ecs-fargate.png)
 
