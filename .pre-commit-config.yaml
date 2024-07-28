@@ -10,6 +10,7 @@ exclude: >
       | src/gunicorn.conf.py
       | .*/migrations/[0-9]{4}_.*\.py
       | .*test.*
+      | cdk\/.*
   )$
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
