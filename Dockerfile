@@ -8,6 +8,13 @@ RUN mkdir -p /usr/src/app/
 WORKDIR /usr/src/app/
 COPY ./src /usr/src/app/
 
+RUN mkdir /var/uwsgi \
+    && chown -R www-data:www-data /var/uwsgi \
+    && chmod -R 777 /var/uwsgi
+
+RUN rm /etc/nginx/nginx.conf
+COPY nginx/nginx.conf /etc/nginx/nginx.conf
+
 COPY start.sh /usr/local/bin/start.sh
 RUN chmod +x /usr/local/bin/start.sh
 
