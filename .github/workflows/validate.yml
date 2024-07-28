@@ -8,7 +8,7 @@ on:
 env:
 
   ENVIRONMENT_PROD: production
-  REGION_DEPLOY: us-west-2
+  REGION_DEPLOY: us-east-2
   REPOSITORY_NAME: django-ecr-challange
   AWS_ACCOUNT_ID_STACK_DJANGO: ${{ secrets.AWS_ACCOUNT_ID_STACK_DJANGO }}
   AWS_ACCESS_KEY_ID_STACK_DJANGO: ${{ secrets.AWS_ACCESS_KEY_ID_STACK_DJANGO }}
