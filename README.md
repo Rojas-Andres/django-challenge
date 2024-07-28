@@ -1,9 +1,6 @@
 # Stack for Django Projects by Andres Rojas
 
 
-
-
-
 ### Patrones de diseño usados
 
 ## Creacion de customers
@@ -39,6 +36,7 @@ El mapa strategy_map_processing asocia nombres de estrategias (json, txt) con in
 
 	Update:
 		- No se puede modificar un prestamo ya activo ni rechazado , esto con el fin de no modificar el amount de un prestamo cuando ya se activo
+
 ###  Payments
 # Creacion de pagos json - POST - /api/payments/
 {
@@ -131,20 +129,14 @@ El mapa strategy_map_processing asocia nombres de estrategias (json, txt) con in
 
 ## Create new app
 
-### With Docker
-
-- `docker-compose -f docker-compose.dev.yml run --rm django sh -c "python manage.py startapp appname"`
-
-### With Virtualenv
-
-- `cd src`
-- `python manage.py startapp appname`
-
 ## Test
 
-### With Docker
+## Correr proyecto con docker (recordar crear el .env en la raiz)
+- ` docker-compose -f docker-compose.dev.yml build `
+- ` docker-compose -f docker-compose.dev.yml up `
 
-- `docker-compose -f docker-compose.dev.yml run --rm django sh -c "python manage.py test"`
+![](images/local_env/docker_compose_local_run.png)
+
 
 ### With Virtualenv
 
@@ -162,6 +154,9 @@ El mapa strategy_map_processing asocia nombres de estrategias (json, txt) con in
 Generar el reporte en HTML:
 
 - `docker-compose -f docker-compose.testing.yml run --rm django sh -c "coverage html"`
+
+
+![](images/local_env/testing_local.png)
 
 ### With Virtualenv
 
