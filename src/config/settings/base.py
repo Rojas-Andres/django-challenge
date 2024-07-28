@@ -50,11 +50,11 @@ INSTALLED_APPS = BASE_APPS + LOCAL_APPS + THIRD_APPS
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "HOST": os.environ.get("DB_HOST"),
-        "NAME": os.environ.get("DB_NAME"),
-        "USER": os.environ.get("DB_USER"),
-        "PORT": os.environ.get("DB_PORT"),
-        "PASSWORD": os.environ.get("DB_PASS"),
+        "HOST": os.environ.get("DB_HOST", "db"),
+        "NAME": os.environ.get("DB_NAME", "postgres"),
+        "USER": os.environ.get("DB_USER", "postgres"),
+        "PORT": os.environ.get("DB_PORT", 5432),
+        "PASSWORD": os.environ.get("DB_PASS", "postgres"),
     }
 }
 
