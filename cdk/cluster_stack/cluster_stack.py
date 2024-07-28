@@ -24,11 +24,11 @@ class ClusterStack(core.Stack):
         cluster_name = f"{stack_name}EcsCluster"
         task_family_name = f"{stack_name}TaskFamily"
         execution_role_name = f"EcsExecutionRole{cluster_name}"
-        environment_bucket_name = f"S3Environments{cluster_name}"
+        environment_bucket_name = f"S3Environments{cluster_name}".lower()
         log_group_name = f"/ecs/{cluster_name}"
 
         ecr_repository = self.node.try_get_context("REPOSITORY_ECR") or "default_task_family"
-        bucket = s3.Bucket(self, environment_bucket_name, bucket_name=environment_bucket_name)
+        bucket = s3.Bucket(self, "BucketEnvironment", bucket_name=environment_bucket_name)
 
         log_group = logs.LogGroup(
             self,
